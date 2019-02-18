@@ -16,10 +16,6 @@ app.use(cors());
 app.use('/api/auth', authRoutes);
 app.use('/api/spotify', spotifyRoutes);
 
-app.get('/', (req, res, next) => {
-  res.send('hello world');
-});
-
 app.listen(PORT, () => {
   console.log(`Server running on ${PORT}`);
 })
