@@ -6,7 +6,6 @@ exports.signin = async function(req, res, next) {
     let user = await db.User.findOne({
       email: req.body.email
     });
-
     if (!user) {
       return next({
         status: 400,
@@ -41,11 +40,8 @@ exports.signin = async function(req, res, next) {
 
 exports.signup = async function(req, res, next) {
   try {
-    console.log(req.body);
     let user = await db.User.create(req.body);
     let {id, username} = user;
-    console.log('new user');
-    console.log(user);
     let token = jwt.sign(
       {id, username},
       process.env.SECRET_KEY
@@ -61,7 +57,6 @@ exports.signup = async function(req, res, next) {
     if (err.code === 11000) {
       err.message = 'Username or Email is already in use';
     }
-    console.log(err);
     return next({
       status: 400,
       message: err.message
