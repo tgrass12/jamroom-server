@@ -4,7 +4,14 @@ const router = express.Router({mergeParams: true});
 const axios = require('axios');
 
 router.get("/signin", (req, res, next) => {
-  const scopes = 'user-read-playback-state user-modify-playback-state';
+  const scopes = [
+    'user-read-playback-state',
+    'user-modify-playback-state',
+    'streaming',
+    'user-read-birthdate',
+    'user-read-email',
+    'user-read-private'
+   ].join(' ');
   const loginUrlBase = `http://accounts.spotify.com/authorize?response_type=code`;
   const loginParams = `&scope=${scopes}&client_id=${process.env.SPOTIFY_CLIENT_ID}&redirect_uri=${process.env.SPOTIFY_REDIRECT_URI}`;
   res.send(`${loginUrlBase}${loginParams}`);

@@ -17,6 +17,8 @@ app.use(cors());
 app.use('/api/auth', authRoutes);
 app.use('/api/spotify', spotifyRoutes);
 
+app.get('*.ico', function(){})
+
 app.use((req, res, next) => {
   let err = new Error('Not Found');
   err.status = 404;
