@@ -6,7 +6,6 @@ const lobbySchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  //TODO: Change host/guests to User models
   host: {
     type: mongoose.Schema.ObjectId,
     ref: "User"

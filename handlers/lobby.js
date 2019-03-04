@@ -12,6 +12,21 @@ exports.createLobby = async function(req, res, next) {
   }
 }
 
+exports.getLobbies = async function(req, res, next) {
+  try {
+    const lobbies = await db.Lobby.find()
+      .populate('host', {
+        username: true
+      })
+      .populate('guests', {
+        username: true
+      });
+    return res.status(200).json(lobbies);
+  } catch(err) {
+    return next(err);
+  }
+}
+
 exports.getLobby = async function(req, res, next) {
   try {
     const lobby = await db.Lobby.findById(req.params.lobby_id)
@@ -44,8 +59,9 @@ exports.addTrackToLobbyQueue = async function(req, res, next) {
       artist: req.body.artist,
       title: req.body.title,
       albumArt: req.body.albumArt,
+      duration: req.body.duration,
       uri: req.body.uri,
-      queueId: req.body.uid
+      uid: req.body.uid
     }
 
     lobby.queue.push(track);
@@ -60,7 +76,7 @@ exports.addTrackToLobbyQueue = async function(req, res, next) {
 exports.removeTrackFromLobbyQueue = async function(req, res, next) {
   try {
     const lobby = await db.Lobby.findById(req.params.lobby_id);
-    lobby.queue = lobby.queue.filter(t => t.queueId !== req.params.track_id);
+    lobby.queue = lobby.queue.filter(t => t.uid !== req.params.track_id);
     await lobby.save();
     return res.status(200).json(lobby);
   } catch(err) {

@@ -4,6 +4,7 @@ const router = express.Router({ mergeParams: true });
 const { 
   createLobby, 
   getLobby,
+  getLobbies,
   deleteLobby,
   getLobbyQueue,
   addTrackToLobbyQueue,
@@ -11,6 +12,7 @@ const {
 } = require('../handlers/lobby');
 
 router.route('/')
+  .get(getLobbies)
   .post(createLobby);
 
 router.route('/:lobby_id')

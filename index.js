@@ -17,7 +17,7 @@ app.use(cors());
 
 app.use('/api/auth', authRoutes);
 app.use('/api/spotify', spotifyRoutes);
-app.use('/api/lobby', lobbyRoutes);
+app.use('/api/lobbies', lobbyRoutes);
 
 app.get('*.ico', function(){})
 
